@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Отправка вопросов на сервер</title>
+    <title>Пройти тест</title>
     <style>
      body{
             font-family: Arial, Helvetica, sans-serif;
