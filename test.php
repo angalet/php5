@@ -71,8 +71,26 @@ echo "<a href='http://localhost/php5/list.php'>К списку вопросов<
 ?></div><?php
 }
 if (isset($_GET['OK'])){
-   print_r($_GET);
-   
+   //print_r($_GET);
+   $file = file_get_contents(__DIR__.'/uploads/'.$_GET['file'], "r");
+   $file = json_decode($file, true);
+   echo "<pre>";
+   //print_r($file);
+   echo "</pre>";
+   $quant_quest = $file[0]['quant_quest'];
+   //echo $quant_quest."<br>";
+   $i =0;
+   $n = 1;
+   echo "<p><h1>".$file[0]['test_name']."</h1></p>";
+    while($i<$quant_quest){
+        if ($file[$i]['right_answer']==$_GET[$i]){
+            //echo $file[$i]['right_answer']." -".$_GET[$i]."<br>";
+            echo "Ответ на вопрос № ".$n." верный<br>";
+        }else{echo "Ответ на вопрос № ".$n." не верный<br>";}
+        $i++;
+        $n++;
+    }
+    echo "<p><a href='http://localhost/php5/list.php'>К списку вопросов</a></p>";
 }
 ?>
 
