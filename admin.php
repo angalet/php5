@@ -50,8 +50,6 @@
 }
 if (isset($_POST['OK']) and !empty($_FILES)){
     ?><div><?php
-    echo '<pre>';
-    //print_r($_FILES);
     if (move_uploaded_file($_FILES['questions']['tmp_name'], __DIR__."/uploads/".$_FILES['questions']['name'])) {
         echo "Файл корректен и был успешно загружен.\n";
     } else {
@@ -64,10 +62,10 @@ if (move_uploaded_file($_FILES['avatar']['tmp_name'], '1.jpg')) {
 } else {
     echo "Возможная атака с помощью файловой загрузки!\n";
 }
-echo "<p><a href='http://localhost/php5/admin.php'>Загрузить еще вопросы</a></p>";
+echo "<p><a href='admin.php'>Загрузить еще вопросы</a></p>";
 
 }
-echo "<p><a href='http://localhost/php5/list.php'>К списку вопросов</a></p>";
+echo "<p><a href='list.php'>К списку вопросов</a></p>";
 
 ?>
 
