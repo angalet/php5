@@ -40,7 +40,7 @@
 <section>
 <div>
 <?php
-    if($_GET['quest']){
+    if(isset($_GET['quest'])){
         $file = file_get_contents(__DIR__.'/uploads/'.$_GET['quest'], "r");
         $file = json_decode($file, true);
         $n = 1;

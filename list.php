@@ -10,7 +10,7 @@
         section{
             margin:auto;
             max-width: 80%;
-            text-align: left;
+            text-align: center;
         }
         div{
             text-align: center; 
@@ -49,10 +49,9 @@ if ($handledir = opendir(__DIR__."/uploads/")) {
         //echo "|".$file."|<br>";
         $name = $file;
         $file = file_get_contents(__DIR__."/uploads/".$file,  "r");
-        echo $_POST['test_name'];
         $file = json_decode($file, true);
         if ($file){
-            echo "<p><a href='test.php?quest=".$name."'>Пройти тест - ".$file[0]['test_name']."</a></p>";
+            echo "<p'><a href='test.php?quest=".$name."'>Пройти тест - ".$file[0]['test_name']."</a></p>";
         }
     }
     echo "<a href='admin.php'>Загрузить вопросы</a>";
