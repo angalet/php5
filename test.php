@@ -41,7 +41,13 @@
 <div>
 <?php
     if(isset($_GET['quest'])){
+        if (!file_exists(__DIR__.'/uploads/'.$_GET['quest'])){
+            header("HTTP/1.1 404 Not Found");
+            echo "нет такого теста";
+            exit();
+        }else{
         $file = file_get_contents(__DIR__.'/uploads/'.$_GET['quest'], "r");
+        
         $file = json_decode($file, true);
         $n = 1;
         $m = 0;
@@ -49,6 +55,10 @@
     <form method='get' action='test.php'>
         <img src="1.jpg" width="400"><br>
         <p><h1>"<?php echo $file[0]['test_name']; ?>"</h1></p>
+        <p><label for="name_user">Введите Ваше имя</label>
+        <input name="name_user" required id="name_user" type="text"  /></p>
+        <p><label for="email_user">Введите почту</label>
+        <input name="email_user" id="email_user" type="email"  /></p>
 <?php
     foreach($file as $value)
     {
@@ -56,7 +66,7 @@
 
         echo "<p style='background-color:#FFCE00;border-radius:5px;text-align: left;'>Вопрос № $n - ".$value['questin']."<br>";
         while($i<=$value['num_quest']){
-            echo "<input type='radio' name=".$m." value=".$i." />".$value[$i]."<br>";
+            echo "<input style='vertical-align:middle;' type='radio' required name=".$m." value=".$i." />".$value[$i]."<br>";
             $i++;
         }
         $n++;
@@ -70,6 +80,7 @@
     <a href='list.php'>К списку вопросов</a>
 </div>
 <?php
+    }
 }
 if (isset($_GET['OK'])){
    $file = file_get_contents(__DIR__.'/uploads/'.$_GET['file'], "r");
@@ -77,6 +88,15 @@ if (isset($_GET['OK'])){
    $quant_quest = $file[0]['quant_quest'];
    $i =0;
    $n = 1;
+   $name_user = $_GET['name_user'];
+   echo "Ваше имя - ".$_GET['name_user']."<br>";
+   if ($_GET['email_user']){
+    echo "Ваше почта - ".$_GET['email_user']."<br>";
+   }
+?>
+   <p>Ниже Ваш сертификат</p>
+    <img width="200" src="sert.php?name=<?php echo $name_user?>" />
+<?php   
    echo "<p><h1>".$file[0]['test_name']."</h1></p>";
         while($i<$quant_quest){
             if ($file[$i]['right_answer']==$_GET[$i]){

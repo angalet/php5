@@ -39,7 +39,6 @@
 <body>
 <section>
 <?php if (isset($_POST['OK']) != "OK"){ 
-//echo phpinfo();
     ?>
 <form action="" name="form1" method="post" enctype="multipart/form-data">
 <p>Выберите JSON файл для загрузки на сервер</p>
@@ -62,7 +61,7 @@ if (isset($_POST['OK']) and !empty($_FILES)){
     
 if (move_uploaded_file($_FILES['avatar']['tmp_name'], '1.jpg')) {
     echo "Файл корректен и был успешно загружен.\n";
-    //header("Location: list.php");
+    header("Location: list.php");
 } else {
     echo "Возможная атака с помощью файловой загрузки!\n";
 }
