@@ -26,7 +26,7 @@ if (!isset($_SESSION['NAME']) and isset($_SERVER['PHP_AUTH_USER'])) {
         header("Location: admin.php");
     }
 } 
-if ($_SERVER['PHP_AUTH_USER']==='bag' and $_SERVER['PHP_AUTH_PW']==='7777777'){
+if ($_SERVER['PHP_AUTH_USER']==='admin' and $_SERVER['PHP_AUTH_PW']==='7777777'){
     header("Location: admin.php");
 }
 if (!isset($_SESSION['NAME'])) {
@@ -41,5 +41,4 @@ if (isset($_POST["nonauth"])){
     setcookie("user_auth", "NO");
     header("Location: admin.php");
 }
-var_dump($_SESSION);
 ?>
