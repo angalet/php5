@@ -38,17 +38,29 @@
 
 <body>
 <section>
-<?php if (isset($_POST['OK']) != "OK"){ 
-    ?>
-<form action="" name="form1" method="post" enctype="multipart/form-data">
-<p>Выберите JSON файл для загрузки на сервер</p>
-<p><input type="file" name="questions" /></p>
-<p>Выберите картинку</p>
-<p><input type="file" name="avatar" /></p>
-<p><input type="submit" name="OK" value="OK" /></p>
-</form>
-<?php
+<?php 
+echo "<pre>";
+//var_dump($_SERVER);
+//print_r($GLOBALS);
+echo "</pre>";
+echo "Вы вошли под ".$_COOKIE['user_name'];
+if (!$_COOKIE['user_name']){
+header('HTTP/1.0 403 Unauthorized');
 }
+else{
+    if ($_COOKIE['user_auth']=='YES'){
+if (isset($_POST['OK']) != "OK" and $_SERVER['PHP_AUTH_USER']==='admin' and $_SERVER['PHP_AUTH_PW']==='7777777'){ 
+    ?>
+        <form action="" name="form1" method="post" enctype="multipart/form-data">
+        <p>Выберите JSON файл для загрузки на сервер</p>
+        <p><input type="file" name="questions" /></p>
+        <p>Выберите картинку</p>
+        <p><input type="file" name="avatar" /></p>
+        <p><input type="submit" name="OK" value="OK" /></p>
+        </form>
+        <?php
+        }
+    }
 if (isset($_POST['OK']) and !empty($_FILES)){
     ?><div><?php
     if (move_uploaded_file($_FILES['questions']['tmp_name'], __DIR__."/uploads/".$_FILES['questions']['name'])) {
@@ -69,7 +81,7 @@ echo "<p><a href='admin.php'>Загрузить еще вопросы</a></p>";
 
 }
 echo "<p><a href='list.php'>К списку вопросов</a></p>";
-
+}
 ?>
 
 

@@ -45,19 +45,29 @@
 <section>
 <?php
 if ($handledir = opendir(__DIR__."/uploads/")) {
+    echo "<form method='post'>";
     while (false !== ($file = readdir($handledir))) { 
         //echo "|".$file."|<br>";
         $name = $file;
         $file = file_get_contents(__DIR__."/uploads/".$file,  "r");
         $file = json_decode($file, true);
         if ($file){
-            echo "<p'><a href='test.php?quest=".$name."'>Пройти тест - ".$file[0]['test_name']."</a></p>";
+            echo "<p'><a href='test.php?quest=".$name."'>Пройти тест - ".$file[0]['test_name']."</a><input type='radio' name='file' value=".$name." /></p>";
         }
     }
+    echo "<p><input type='submit' name='delete_test' value='OK' /> удалить</p>";
+    echo "</form>";
     echo "<a href='admin.php'>Загрузить вопросы</a>";
     }
     else{
     echo 'тесты не найдены или нет доступа!';
+    }
+    if (isset($_POST['delete_test'])){
+        //print_r($_POST);
+        $file_name = str_replace("_",".", $_POST["file"]);
+        //echo $file_name;
+        unlink(__DIR__."/uploads/".$file_name);
+        header("Location: list.php");
     }
 ?>
 </section>
