@@ -39,10 +39,6 @@
 <body>
 <section>
 <?php 
-echo "<pre>";
-//var_dump($_SERVER);
-//print_r($GLOBALS);
-echo "</pre>";
 echo "Вы вошли под ".$_COOKIE['user_name'];
 if (!$_COOKIE['user_name']){
 header('HTTP/1.0 403 Unauthorized');
