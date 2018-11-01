@@ -39,13 +39,17 @@
 <body>
 <section>
 <?php 
+echo "<pre>";
+echo "</pre>";
 echo "Вы вошли под ".$_COOKIE['user_name'];
 if (!$_COOKIE['user_name']){
 header('HTTP/1.0 403 Unauthorized');
 }
 else{
+    $file = file_get_contents("users.json",  "r");
+    $file = json_decode($file, true);
     if ($_COOKIE['user_auth']=='YES'){
-if (isset($_POST['OK']) != "OK" and $_SERVER['PHP_AUTH_USER']==='admin' and $_SERVER['PHP_AUTH_PW']==='7777777'){ 
+        if ($file[$_SERVER['PHP_AUTH_USER']] and $_SERVER['PHP_AUTH_PW']===$file[$_SERVER['PHP_AUTH_USER']]){ 
     ?>
         <form action="" name="form1" method="post" enctype="multipart/form-data">
         <p>Выберите JSON файл для загрузки на сервер</p>

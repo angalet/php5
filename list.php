@@ -47,7 +47,6 @@
 if ($handledir = opendir(__DIR__."/uploads/")) {
     echo "<form method='post'>";
     while (false !== ($file = readdir($handledir))) { 
-        //echo "|".$file."|<br>";
         $name = $file;
         $file = file_get_contents(__DIR__."/uploads/".$file,  "r");
         $file = json_decode($file, true);
@@ -59,13 +58,16 @@ if ($handledir = opendir(__DIR__."/uploads/")) {
             echo "</p>";
         }
     }
+    $file_ = file_get_contents("users.json",  "r");
+    $file_ = json_decode($file_, true);
     if ($_COOKIE['user_auth']=='YES'){
-        if ($_SERVER['PHP_AUTH_USER']==='admin' and $_SERVER['PHP_AUTH_PW']==='7777777'){ 
+        if ($file_[$_SERVER['PHP_AUTH_USER']] and $_SERVER['PHP_AUTH_PW']===$file_[$_SERVER['PHP_AUTH_USER']]){
     echo "<p><input type='submit' name='delete_test' value='OK' /> удалить</p>";
         }
+        echo "<a href='admin.php'>Загрузить вопросы</a>";
     }
     echo "</form>";
-    echo "<a href='admin.php'>Загрузить вопросы</a>";
+    
     }
     else{
     echo 'тесты не найдены или нет доступа!';

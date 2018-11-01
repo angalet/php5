@@ -16,9 +16,12 @@
 </html>
 <?php
 session_start();
+$file = file_get_contents("users.json",  "r");
+$file = json_decode($file, true);
 if (isset($_POST["auth"])){
 if (!isset($_SESSION['NAME']) and isset($_SERVER['PHP_AUTH_USER'])) {
-    if ($_SERVER['PHP_AUTH_USER']==='admin' and $_SERVER['PHP_AUTH_PW']==='7777777'){
+    
+    if ($file[$_SERVER['PHP_AUTH_USER']] and $_SERVER['PHP_AUTH_PW']===$file[$_SERVER['PHP_AUTH_USER']]){
         $_SESSION['NAME'] = $_SERVER['PHP_AUTH_USER'];
         setcookie("user_name", $_SERVER['PHP_AUTH_USER']);
         setcookie("user_auth", "YES");
@@ -26,8 +29,10 @@ if (!isset($_SESSION['NAME']) and isset($_SERVER['PHP_AUTH_USER'])) {
         header("Location: admin.php");
     }
 } 
-if ($_SERVER['PHP_AUTH_USER']==='admin' and $_SERVER['PHP_AUTH_PW']==='7777777'){
-    header("Location: admin.php");
+if  ($_COOKIE['user_auth']=='YES') {
+    if ($file[$_SERVER['PHP_AUTH_USER']] and $_SERVER['PHP_AUTH_PW']===$file[$_SERVER['PHP_AUTH_USER']]){
+        header("Location: admin.php");
+    }
 }
 if (!isset($_SESSION['NAME'])) {
     header('WWW-Authenticate: Basic realm="admin"');
@@ -36,7 +41,7 @@ if (!isset($_SESSION['NAME'])) {
     exit;
 }
 }
-if (isset($_POST["nonauth"])){
+if (isset($_POST["nonauth"]) and $_POST["name_nonauth"]){
     setcookie("user_name", $_POST["name_nonauth"]);
     setcookie("user_auth", "NO");
     header("Location: admin.php");
