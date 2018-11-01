@@ -52,10 +52,18 @@ if ($handledir = opendir(__DIR__."/uploads/")) {
         $file = file_get_contents(__DIR__."/uploads/".$file,  "r");
         $file = json_decode($file, true);
         if ($file){
-            echo "<p'><a href='test.php?quest=".$name."'>Пройти тест - ".$file[0]['test_name']."</a><input type='radio' name='file' value=".$name." /></p>";
+            echo "<p'><a href='test.php?quest=".$name."'>Пройти тест - ".$file[0]['test_name']."</a>";
+            if ($_COOKIE['user_auth']=='YES'){
+            echo "<input type='radio' name='file' value=".$name." />";
+            }
+            echo "</p>";
         }
     }
+    if ($_COOKIE['user_auth']=='YES'){
+        if ($_SERVER['PHP_AUTH_USER']==='admin' and $_SERVER['PHP_AUTH_PW']==='7777777'){ 
     echo "<p><input type='submit' name='delete_test' value='OK' /> удалить</p>";
+        }
+    }
     echo "</form>";
     echo "<a href='admin.php'>Загрузить вопросы</a>";
     }
